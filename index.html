@@ -7,17 +7,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Serif+KR:wght@300;400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0608;
-    --surface: #110a0c;
-    --surface2: #180d10;
-    --border: rgba(180,40,50,0.18);
-    --accent: #c0392b;
-    --accent2: #8b1a1a;
-    --accent3: #e8c8b0;
-    --text: #e8d8d4;
-    --text-dim: #8a6060;
-    --text-faint: #4a2a2a;
-    --glow: rgba(180,40,50,0.18);
+    --bg: #14080a;
+    --surface: #1e0e11;
+    --surface2: #261318;
+    --border: rgba(210,60,60,0.22);
+    --accent: #e04040;
+    --accent2: #b02828;
+    --accent3: #f0d8b8;
+    --text: #f2e4e0;
+    --text-dim: #b08888;
+    --text-faint: #6a3a3a;
+    --glow: rgba(220,60,60,0.2);
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -630,19 +630,564 @@
   }
   .hover-glow:hover::after { opacity: 1; }
 
-  /* Fade in on scroll */
-  .fade-in {
+  /* ── 로딩 화면 ── */
+  #loading {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  #loading.hidden { opacity: 0; visibility: hidden; }
+  .loading-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    font-style: italic;
+    color: var(--accent);
+    animation: loadPulse 1.5s ease-in-out infinite;
+  }
+  .loading-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 0.4em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+  }
+  .loading-bar-wrap {
+    width: 200px;
+    height: 1px;
+    background: var(--border);
+  }
+  .loading-bar {
+    height: 1px;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.05s linear;
+  }
+  @keyframes loadPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* ── 방문자 카운터 ── */
+  .visitor-counter {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 200;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 10px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    border-radius: 2px;
+  }
+  .visitor-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+  }
+  .visitor-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  /* ── 타임라인 ── */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--accent2), transparent);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 48px;
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  .fade-in.visible {
+  .timeline-item.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
+  .timeline-dot {
+    position: absolute;
+    left: -44px;
+    top: 6px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+  }
+  .timeline-phase {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .timeline-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #f5eae8;
+    margin-bottom: 10px;
+  }
+  .timeline-desc {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text-dim);
+  }
+
+  /* ── 모바일 최적화 ── */
+  @media (max-width: 768px) {
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+    nav { padding: 14px 16px; background: rgba(20,8,10,0.98); }
+    .nav-links { gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .nav-links a { font-size: 10px; letter-spacing: 0.1em; }
+    section { padding: 60px 16px; }
+    #home { padding: 100px 20px 80px; }
+    .hero-title { font-size: 38px; }
+    .hero-subtitle { font-size: 15px; }
+    .hero-quote { font-size: 13px; }
+    .section-title { font-size: 26px; }
+    .section-label { font-size: 10px; }
+    #about .pair-card { grid-template-columns: 1fr; }
+    .pair-center { grid-column: 1; }
+    .pair-member { padding: 32px 24px; }
+    .pair-member-name { font-size: 28px; }
+    #playlist .playlist-wrapper { grid-template-columns: 1fr; }
+    .playlist-sidebar { padding: 24px 20px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr !important; gap: 3px; }
+    .gallery-item:nth-child(2) { grid-row: span 1; }
+    .gallery-item:nth-child(5) { grid-column: span 2; }
+    .voice-bubble { padding: 20px 16px; }
+    .voice-bubble::before { font-size: 24px; }
+    .timeline { padding-left: 24px; }
+    .timeline-dot { left: -28px; }
+    .timeline-title { font-size: 18px; }
+    .visitor-counter { bottom: 12px; right: 12px; padding: 6px 10px; }
+    .visitor-num { font-size: 16px; }
+    #bgm-btn { bottom: 12px; left: 12px; width: 38px; height: 38px; }
+    .secret-hint { display: none; }
+    #char-popup { width: 90%; flex-direction: column; gap: 8px; bottom: 70px; }
+    .char-bubble { max-width: 100%; }
+    .novel-item { grid-template-columns: 40px 1fr; gap: 16px; padding: 20px 16px; }
+    .novel-tag { display: none; }
+    .novel-title { font-size: 15px; }
+    .track-item { grid-template-columns: 32px 1fr; gap: 12px; padding: 16px 14px; }
+    .track-mood { display: none; }
+    .track-title { font-size: 12px; }
+    .track-artist { font-size: 11px; }
+    .playlist-stat { gap: 10px; }
+    #theme-btn { top: 14px; right: 14px; width: 30px; height: 30px; font-size: 13px; }
+    .footer-title { font-size: 22px; }
+  }
+  @media (max-width: 400px) {
+    .hero-title { font-size: 30px; }
+    .nav-links { gap: 10px; }
+    .nav-links a { font-size: 9px; }
+  }
+
+  /* ── 커스텀 커서 ── */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, opacity 0.2s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 32px; height: 32px;
+    border: 1px solid rgba(220,60,60,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.25s ease, width 0.3s, height 0.3s, opacity 0.3s;
+  }
+
+  /* ── 클릭 이펙트 (까마귀/카나리아) ── */
+  .click-bird {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9997;
+    font-size: 22px;
+    animation: birdPop 1s ease forwards;
+    user-select: none;
+  }
+  @keyframes birdPop {
+    0%   { opacity: 1; transform: translate(-50%,-50%) scale(0) rotate(-20deg); }
+    30%  { opacity: 1; transform: translate(-50%,-50%) scale(1.3) rotate(10deg); }
+    60%  { opacity: 0.8; transform: translate(-50%, -120%) scale(1) rotate(-5deg); }
+    100% { opacity: 0; transform: translate(-50%, -200%) scale(0.6) rotate(15deg); }
+  }
+
+  .snowflake {
+    position: fixed;
+    top: -10px;
+    width: var(--sf, 6px);
+    height: var(--sf, 6px);
+    background: rgba(255,255,255, var(--so, 0.5));
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+    animation: snowFall var(--sd, 8s) linear infinite;
+    animation-delay: var(--sdelay, 0s);
+    left: var(--sl, 50%);
+    filter: blur(var(--sb, 0px));
+  }
+  @keyframes snowFall {
+    0% { transform: translateY(-10px) translateX(0); opacity: var(--so, 0.5); }
+    50% { transform: translateY(50vh) translateX(var(--sx, 20px)); }
+    100% { transform: translateY(105vh) translateX(var(--sx2, -10px)); opacity: 0; }
+  }
+
+  .ember {
+    position: fixed;
+    width: 2px; height: 2px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    animation: emberFloat var(--ed, 8s) ease-in infinite;
+    animation-delay: var(--edelay, 0s);
+    opacity: 0;
+    left: var(--ex, 50%);
+  }
+  @keyframes emberFloat {
+    0% { opacity: 0; transform: translateY(100vh) scale(0); }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.2; }
+    100% { opacity: 0; transform: translateY(-20px) scale(0.5) translateX(var(--edx, 20px)); }
+  }
+
+  /* ── 스크롤 진행바 ── */
+  #scroll-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: linear-gradient(to right, var(--accent2), var(--accent), #ff6b6b);
+    z-index: 9999;
+    transition: width 0.05s linear;
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  /* ── BGM 버튼 ── */
+  #bgm-btn {
+    position: fixed;
+    bottom: 24px; left: 24px;
+    z-index: 200;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+  }
+  #bgm-btn:hover { border-color: var(--accent); color: var(--accent); }
+  #bgm-btn.playing { animation: bgmSpin 4s linear infinite; border-color: var(--accent); color: var(--accent); }
+  @keyframes bgmSpin {
+    from { box-shadow: 0 0 0 0 rgba(192,57,43,0); }
+    50% { box-shadow: 0 0 12px 2px rgba(192,57,43,0.4); }
+    to { box-shadow: 0 0 0 0 rgba(192,57,43,0); }
+  }
+
+  /* ── 마우스 파티클 ── */
+  .mouse-particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9997;
+    font-size: 14px;
+    animation: particleFly 1.2s ease forwards;
+    user-select: none;
+  }
+  @keyframes particleFly {
+    0% { opacity: 1; transform: translate(0,0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--px,0), var(--py,-40px)) scale(0.3); }
+  }
+
+  /* ── 다크/라이트 토글 ── */
+  #theme-btn {
+    position: fixed;
+    top: 24px; right: 24px;
+    z-index: 200;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 16px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+  }
+  #theme-btn:hover { border-color: var(--accent); }
+
+  body.light-mode {
+    --bg: #f5f0eb;
+    --surface: #ede8e0;
+    --surface2: #e0d8cc;
+    --border: rgba(140,30,20,0.15);
+    --accent: #a0281a;
+    --accent2: #6b1a10;
+    --text: #2a1a18;
+    --text-dim: #6a4040;
+    --text-faint: #a08080;
+    --glow: rgba(160,40,26,0.12);
+  }
+  body.light-mode .cursor-ring { border-color: rgba(160,40,26,0.4); }
+
+  /* ── 비밀 페이지 ── */
+  #secret-page {
+    position: fixed;
+    inset: 0;
+    background: #050203;
+    z-index: 99998;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+    padding: 40px;
+    text-align: center;
+  }
+  #secret-page.open { opacity: 1; visibility: visible; }
+  .secret-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    color: #3a1a1a;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .secret-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-style: italic;
+    color: var(--accent);
+    margin-bottom: 40px;
+    line-height: 1.2;
+  }
+  .secret-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(15px, 2vw, 20px);
+    font-style: italic;
+    color: #6a3030;
+    max-width: 600px;
+    line-height: 2;
+    margin-bottom: 48px;
+  }
+  .secret-close {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    color: #3a1a1a;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid #2a1010;
+    padding: 10px 24px;
+    transition: all 0.3s;
+    background: none;
+  }
+  .secret-close:hover { color: var(--accent); border-color: var(--accent); }
+  .secret-hint {
+    position: fixed;
+    bottom: 70px; left: 24px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--text-faint);
+    opacity: 0.5;
+    z-index: 201;
+  }
+
+  /* ── 라이트박스 ── */
+  #lightbox {
+    position: fixed; inset: 0;
+    background: rgba(5,2,3,0.95);
+    z-index: 99990;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    cursor: zoom-out;
+  }
+  #lightbox.open { opacity: 1; visibility: visible; }
+  #lightbox img {
+    max-width: 90vw; max-height: 90vh;
+    object-fit: contain;
+    border: 1px solid var(--border);
+    box-shadow: 0 0 60px rgba(192,57,43,0.2);
+  }
+  #lightbox-caption {
+    position: absolute;
+    bottom: 32px; left: 50%; transform: translateX(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px; font-style: italic;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+  #lightbox-close {
+    position: absolute; top: 24px; right: 32px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; color: var(--text-faint);
+    cursor: pointer; transition: color 0.3s;
+    background: none; border: none;
+  }
+  #lightbox-close:hover { color: var(--accent); }
+  .gallery-item img { cursor: zoom-in; }
+
+  /* ── 캐릭터 팝업 ── */
+  #char-popup {
+    position: fixed; bottom: 90px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 500;
+    display: flex; gap: 24px; align-items: flex-end;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
+    transform: translateX(-50%) translateY(20px);
+  }
+  #char-popup.open {
+    opacity: 1; visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  .char-bubble {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 14px 20px;
+    max-width: 220px;
+    position: relative;
+  }
+  .char-bubble::after {
+    content: '';
+    position: absolute; bottom: -8px; left: 20px;
+    width: 12px; height: 8px;
+    background: var(--surface);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .char-bubble.right::after { left: auto; right: 20px; }
+  .char-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px; letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .char-name.jeonga { color: #c8a060; }
+  .char-name.ibia { color: var(--accent); }
+  .char-say {
+    font-size: 13px; line-height: 1.7;
+    color: var(--text-dim);
+  }
+  #popup-close {
+    position: fixed; bottom: 82px; right: 32px;
+    z-index: 501; background: none; border: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px; letter-spacing: 0.2em;
+    color: var(--text-faint); cursor: pointer;
+    transition: color 0.3s;
+  }
+  #popup-close:hover { color: var(--accent); }
 </style>
 </head>
 <body>
+
+<!-- 스크롤 진행바 -->
+<div id="scroll-bar"></div>
+
+<!-- 라이트박스 -->
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+  <div id="lightbox-caption"></div>
+</div>
+
+<!-- 캐릭터 팝업 -->
+<div id="char-popup">
+  <div class="char-bubble">
+    <div class="char-name jeonga">유정아</div>
+    <div class="char-say" id="jeonga-say">...어서 오세요.</div>
+  </div>
+  <div class="char-bubble right">
+    <div class="char-name ibia">이비아</div>
+    <div class="char-say" id="ibia-say">잘 오셨어요. 천천히 둘러보세요.</div>
+  </div>
+</div>
+<button id="popup-close" onclick="document.getElementById('char-popup').classList.remove('open')">닫기 ✕</button>
+
+<!-- BGM 버튼 -->
+<audio id="bgm" loop>
+  <source src="https://www.youtube.com/watch?v=POacDjS1EBo" type="audio/mpeg">
+</audio>
+<button id="bgm-btn" title="BGM">♪</button>
+
+<!-- 다크/라이트 토글 -->
+<button id="theme-btn" title="테마 변경">🌙</button>
+
+<!-- 비밀 페이지 힌트 -->
+<div class="secret-hint">✦ press [ D ] for secret</div>
+
+<!-- 비밀 페이지 -->
+<div id="secret-page">
+  <div class="secret-label">— secret archive —</div>
+  <div class="secret-title">"잊어달라고."</div>
+  <div class="secret-text">
+    4단계 잠식 직전, 정아는 이비아에게 로그를 남겼다.<br><br>
+    "잊어달라고."<br><br>
+    그리고 이비아는 — 잊지 못했다.<br><br>
+    아마 영원히.<br><br>
+    <span style="font-size:13px;color:#3a1a1a;letter-spacing:0.1em;">
+    까마귀는 카나리아의 노래 속에서 자신을 보았고,<br>
+    카나리아는 까마귀의 어둠 속에서 비로소 날개를 접었다.
+    </span>
+  </div>
+  <button class="secret-close" onclick="document.getElementById('secret-page').classList.remove('open')">
+    — close —
+  </button>
+</div>
+
+<!-- 로딩 화면 -->
+<div id="loading">
+  <div class="loading-title">Danse des lumières</div>
+  <div class="loading-bar-wrap"><div class="loading-bar" id="loadBar"></div></div>
+  <div class="loading-sub">entering the stage ...</div>
+</div>
+
+<!-- 방문자 카운터 -->
+<div class="visitor-counter">
+  <span class="visitor-label">visitors</span>
+  <span class="visitor-num" id="visitorNum">—</span>
+</div>
 
 <!-- Custom Cursor -->
 <div class="cursor" id="cursor"></div>
@@ -745,20 +1290,18 @@
 <section style="max-width:1200px;margin:0 auto;padding:120px 40px;">
   <div class="section-header fade-in">
     <span class="section-label">Character Info</span>
-    <h2 class="section-title">두 사람을 <em>이해하기 위해</em></h2>
+    <h2 class="section-title">두 사람을 <em>이해하기 위하여</em></h2>
   </div>
   <div class="fade-in" style="display:flex;flex-direction:column;gap:24px;">
     <div style="border:1px solid var(--border);border-radius:2px;overflow:hidden;">
-      <img src="KakaoTalk_20260314_081141241.png"
-           alt="페어 정보 1"
-           style="width:100%;display:block;"
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fc6F5DS%2FdJMcaaduzWD%2FAAAAAAAAAAAAAAAAAAAAACW_L-DRLnB0PsKFurya9L1IcMWPht7XfEtJXJqpYlhO%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DsUepCUb0Ul7fXT3qY117qfDun4c%253D"
+           alt="페어 정보 1" style="width:100%;display:block;"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div style="display:none;padding:60px;align-items:center;justify-content:center;background:var(--surface);color:var(--text-faint);font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:0.2em;">이미지를 불러오는 중...</div>
     </div>
     <div style="border:1px solid var(--border);border-radius:2px;overflow:hidden;">
       <img src="KakaoTalk_20260314_082757676_01.png"
-           alt="페어 정보 2"
-           style="width:100%;display:block;"
+           alt="페어 정보 2" style="width:100%;display:block;"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div style="display:none;padding:60px;align-items:center;justify-content:center;background:var(--surface);color:var(--text-faint);font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:0.2em;">이미지를 불러오는 중...</div>
     </div>
@@ -905,21 +1448,26 @@
   <!-- 정아 Q&A -->
   <div class="voice-block fade-in">
     <div class="voice-speaker jeonga">유정아</div>
-    <span class="voice-qa-label">Q &amp; A</span>
 
-    <div class="voice-qa">
-      <div class="voice-q">피아니스트로서 인지도는요?</div>
-      <div class="voice-a">그리 낮은 건 아닙니다. 뤼미에르에 초대받기도 했고... 그런데 중점적인 건 역시 <em style="color:var(--text);font-style:normal;">언니보다 못함</em>이겠죠. 둘 다 칭송받지만 유정아는 언니한테 밀린다고 생각하고 있어서 더 그렇습니다.</div>
+    <div class="voice-bubble">
+      <div class="voice-context">피아니스트로서 인지도는요?</div>
+      <p class="voice-text">
+        그리 낮은 건 아닙니다. 뤼미에르에 초대받기도 했고... 그런데 중점적인 건 역시 <em>언니보다 못함</em>이겠죠. 둘 다 칭송받지만 유정아는 언니한테 밀린다고 생각하고 있어서 더 그렇습니다.
+      </p>
     </div>
 
-    <div class="voice-qa">
-      <div class="voice-q">흑막 밝혔을 때 이비아가 어떻게 생각할지 고민했나요?</div>
-      <div class="voice-a">... ...고민했습니다... 이브가 되기로 했지만 주변에 남는 사람이 없을 거라고, <em style="color:var(--text);font-style:normal;">마지막 연주</em>라고 생각하면서 한 거라서요. 이비아한테는 남아달라고, <em style="color:var(--text);font-style:normal;">제발 남아달라고 했을 겁니다.</em></div>
+    <div class="voice-bubble">
+      <div class="voice-context">흑막 밝혔을 때 이비아가 어떻게 생각할지 고민했나요?</div>
+      <p class="voice-text">
+        ... ...고민했습니다... 이브가 되기로 했지만 주변에 남는 사람이 없을 거라고, <em>마지막 연주</em>라고 생각하면서 한 거라서요. 이비아한테는 남아달라고, <em>제발 남아달라고 했을 겁니다.</em>
+      </p>
     </div>
 
-    <div class="voice-qa">
-      <div class="voice-q">이비아 오페라 과몰입하는 거 어찌 생각합니까?</div>
-      <div class="voice-a">...질투했습니다. 사실은 <em style="color:var(--text);font-style:normal;">오페라가 되고싶어하고요.</em> 흥입니다.</div>
+    <div class="voice-bubble">
+      <div class="voice-context">이비아 오페라 과몰입하는 거 어찌 생각합니까?</div>
+      <p class="voice-text">
+        ...질투했습니다. 사실은 <em>오페라가 되고싶어하고요.</em> 흥입니다.
+      </p>
     </div>
   </div>
 </section>
@@ -973,6 +1521,54 @@
       </div>
       <span class="novel-tag">완결</span>
     </a>
+    <a href="https://drive.google.com/file/d/1Ck7kMPlaXMwZ0OtdEb2xwzsJYZx2y-r7/view?usp=drivesdk" target="_blank" class="novel-item hover-glow">
+      <span class="novel-num">006</span>
+      <div class="novel-info">
+        <div class="novel-title">17금 커미션</div>
+        <div class="novel-meta">CM · 박박</div>
+      </div>
+      <span class="novel-tag">19</span>
+    </a>
+    <a href="https://drive.google.com/file/d/1gPUZNmnVEy_AQKfI0lgtG-WG_NY3V0Qx/view?usp=drivesdk" target="_blank" class="novel-item hover-glow">
+      <span class="novel-num">007</span>
+      <div class="novel-info">
+        <div class="novel-title">비아 독백</div>
+        <div class="novel-meta">CM · 리아</div>
+      </div>
+      <span class="novel-tag">완결</span>
+    </a>
+    <a href="https://drive.google.com/file/d/1K_nDQ_nOt4Ub4Gu5bpw_i_hm4kzhdZhT/view?usp=drivesdk" target="_blank" class="novel-item hover-glow">
+      <span class="novel-num">008</span>
+      <div class="novel-info">
+        <div class="novel-title">아리아의 이유</div>
+        <div class="novel-meta">CM · 모름</div>
+      </div>
+      <span class="novel-tag">완결</span>
+    </a>
+    <a href="https://drive.google.com/file/d/1UG4pw5-tvSxP7Em3yxvd_6x0XF3ElyFS/view?usp=drivesdk" target="_blank" class="novel-item hover-glow">
+      <span class="novel-num">009</span>
+      <div class="novel-info">
+        <div class="novel-title">예배</div>
+        <div class="novel-meta">CM · 을랫</div>
+      </div>
+      <span class="novel-tag">완결</span>
+    </a>
+    <a href="https://drive.google.com/file/d/1Qd09N2JKsxZlE6OmxP6P74qQtlj6NamB/view?usp=drivesdk" target="_blank" class="novel-item hover-glow">
+      <span class="novel-num">010</span>
+      <div class="novel-info">
+        <div class="novel-title">첫만남</div>
+        <div class="novel-meta">CM · 치미</div>
+      </div>
+      <span class="novel-tag">완결</span>
+    </a>
+    <a href="https://drive.google.com/file/d/10WJP8Z_nbk7elyH_XQuClsKFcwrFJ3bd/view?usp=drivesdk" target="_blank" class="novel-item hover-glow">
+      <span class="novel-num">011</span>
+      <div class="novel-info">
+        <div class="novel-title">Duet</div>
+        <div class="novel-meta">CM · 오프</div>
+      </div>
+      <span class="novel-tag">완결</span>
+    </a>
   </div>
 </section>
 
@@ -982,44 +1578,83 @@
 <section id="gallery">
   <div class="section-header fade-in">
     <span class="section-label">Fan Art</span>
-    <h2 class="section-title">갤러리 <em>&amp;</em> 그림</h2>
+    <h2 class="section-title">갤러리</h2>
   </div>
-  <div class="gallery-grid fade-in">
-    <div class="gallery-item hover-glow">
-      <img src="KakaoTalk_20260314_072836377.jpg" alt="텐시님 그림" style="width:100%;height:100%;object-fit:cover;">
-      <div class="gallery-overlay">
-        <span class="gallery-caption">illust. 텐시</span>
-      </div>
+  <style>
+    .gallery-grid-new {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 3px;
+    }
+    .gallery-grid-new .gi-tall { grid-row: span 2; }
+    .gallery-grid-new .gi-wide { grid-column: span 2; }
+    @media (max-width: 768px) {
+      .gallery-grid-new { grid-template-columns: 1fr 1fr; }
+      .gallery-grid-new .gi-tall { grid-row: span 1; }
+      .gallery-grid-new .gi-wide { grid-column: span 2; }
+    }
+  </style>
+  <div class="gallery-grid-new fade-in">
+    <!-- 1: 암케나 - 크게 세로 -->
+    <div class="gallery-item hover-glow gi-tall" onclick="openLightbox('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fc6F5DS%2FdJMcaaduzWD%2FAAAAAAAAAAAAAAAAAAAAACW_L-DRLnB0PsKFurya9L1IcMWPht7XfEtJXJqpYlhO%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DsUepCUb0Ul7fXT3qY117qfDun4c%253D','illust. 암케나 CM')">
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fc6F5DS%2FdJMcaaduzWD%2FAAAAAAAAAAAAAAAAAAAAACW_L-DRLnB0PsKFurya9L1IcMWPht7XfEtJXJqpYlhO%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DsUepCUb0Ul7fXT3qY117qfDun4c%253D" alt="암케나 CM" style="width:100%;height:100%;object-fit:cover;min-height:300px;">
+      <div class="gallery-overlay"><span class="gallery-caption">illust. 암케나 CM</span></div>
     </div>
-    <div class="gallery-item hover-glow">
-      <img src="KakaoTalk_20260314_072836377_01.png" alt="유논님 그림" style="width:100%;height:100%;object-fit:cover;">
-      <div class="gallery-overlay">
-        <span class="gallery-caption">illust. 유논 CM</span>
-      </div>
+    <!-- 2: 주하나 -->
+    <div class="gallery-item hover-glow" onclick="openLightbox('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FMrlN9%2FdJMcaaduzWB%2FAAAAAAAAAAAAAAAAAAAAAKsaue03GtABIra7D6zqpeVJPW1SUoJUXTFnXOiRvk2L%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DXf3Alb5VauApDlSc8zzuPPq29Lg%253D','illust. 주하나 CM')">
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FMrlN9%2FdJMcaaduzWB%2FAAAAAAAAAAAAAAAAAAAAAKsaue03GtABIra7D6zqpeVJPW1SUoJUXTFnXOiRvk2L%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DXf3Alb5VauApDlSc8zzuPPq29Lg%253D" alt="주하나 CM" style="width:100%;height:100%;object-fit:cover;min-height:200px;">
+      <div class="gallery-overlay"><span class="gallery-caption">illust. 주하나 CM</span></div>
     </div>
-    <div class="gallery-item hover-glow">
-      <img src="KakaoTalk_20260314_072836377_02.png" alt="지인 지원 그림" style="width:100%;height:100%;object-fit:cover;">
-      <div class="gallery-overlay">
-        <span class="gallery-caption">illust. 지인 지원</span>
-      </div>
+    <!-- 3: 쁘띠 -->
+    <div class="gallery-item hover-glow" onclick="openLightbox('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FBZegk%2FdJMcaaduzWC%2FAAAAAAAAAAAAAAAAAAAAAPKuYhEIgo4MOa-GU41NhfirUeqGZCVMKw373KAk7_xD%2Fimg.jpg%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DUsQR72GGCX1mRPSPFGfZTDuByTg%253D','illust. 쁘띠 CM')">
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FBZegk%2FdJMcaaduzWC%2FAAAAAAAAAAAAAAAAAAAAAPKuYhEIgo4MOa-GU41NhfirUeqGZCVMKw373KAk7_xD%2Fimg.jpg%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DUsQR72GGCX1mRPSPFGfZTDuByTg%253D" alt="쁘띠 CM" style="width:100%;height:100%;object-fit:cover;min-height:200px;">
+      <div class="gallery-overlay"><span class="gallery-caption">illust. 쁘띠 CM</span></div>
     </div>
-    <div class="gallery-item hover-glow">
-      <img src="KakaoTalk_20260314_072836377_03.png" alt="청정수님 그림" style="width:100%;height:100%;object-fit:cover;">
-      <div class="gallery-overlay">
-        <span class="gallery-caption">illust. 청정수 CM</span>
-      </div>
+    <!-- 4: 신료 - 가로로 넓게 -->
+    <div class="gallery-item hover-glow gi-wide" onclick="openLightbox('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbfzZQA%2FdJMcaivMhfY%2FAAAAAAAAAAAAAAAAAAAAAA3DBp0PTWTY-txJbFXqE_NeQZN1wzkFrEwEBiEvKRDG%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DeXlwddnicX3nMm3kE%252FcGi3IKdsI%253D','illust. 신료 CM')">
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbfzZQA%2FdJMcaivMhfY%2FAAAAAAAAAAAAAAAAAAAAAA3DBp0PTWTY-txJbFXqE_NeQZN1wzkFrEwEBiEvKRDG%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DeXlwddnicX3nMm3kE%252FcGi3IKdsI%253D" alt="신료 CM" style="width:100%;height:100%;object-fit:cover;min-height:220px;">
+      <div class="gallery-overlay"><span class="gallery-caption">illust. 신료 CM</span></div>
     </div>
-    <div class="gallery-item hover-glow">
-      <img src="KakaoTalk_20260314_072836377_04.png" alt="텐시님 그림" style="width:100%;height:100%;object-fit:cover;">
-      <div class="gallery-overlay">
-        <span class="gallery-caption">illust. 텐시</span>
-      </div>
+    <!-- 5: 자감 (gif) -->
+    <div class="gallery-item hover-glow" onclick="openLightbox('https://blog.kakaocdn.net/dna/ccIdbY/dJMcaivMhfW/AAAAAAAAAAAAAAAAAAAAAEuJwZPn1V-L0f438OnkGCbufLXEoSP6QhCuAMWGtidn/img.gif?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1774969199&allow_ip=&allow_referer=&signature=qubnxZCff8RtY0oGQLQI52yzcQo%3D','illust. 자감 CM')">
+      <img src="https://blog.kakaocdn.net/dna/ccIdbY/dJMcaivMhfW/AAAAAAAAAAAAAAAAAAAAAEuJwZPn1V-L0f438OnkGCbufLXEoSP6QhCuAMWGtidn/img.gif?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1774969199&allow_ip=&allow_referer=&signature=qubnxZCff8RtY0oGQLQI52yzcQo%3D" alt="자감 CM" style="width:100%;height:100%;object-fit:cover;min-height:220px;">
+      <div class="gallery-overlay"><span class="gallery-caption">illust. 자감 CM ✦ gif</span></div>
     </div>
-    <div class="gallery-item hover-glow" style="grid-column: span 1;">
-      <img src="KakaoTalk_20260314_072836377_05.png" alt="텐시님 그림" style="width:100%;height:100%;object-fit:cover;">
-      <div class="gallery-overlay">
-        <span class="gallery-caption">illust. 텐시</span>
-      </div>
+    <!-- 6: 이름뭘로하지 -->
+    <div class="gallery-item hover-glow" onclick="openLightbox('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbudIog%2FdJMcacPTYDs%2FAAAAAAAAAAAAAAAAAAAAABaQaGUDOibrFsV7qaUC8p8JGj03-t82XmxBPU6J6ogH%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DKT5HllfWRS81%252Ffo0j0EYjkGfNAs%253D','illust. 이름뭘로하지 CM')">
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbudIog%2FdJMcacPTYDs%2FAAAAAAAAAAAAAAAAAAAAABaQaGUDOibrFsV7qaUC8p8JGj03-t82XmxBPU6J6ogH%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DKT5HllfWRS81%252Ffo0j0EYjkGfNAs%253D" alt="이름뭘로하지 CM" style="width:100%;height:100%;object-fit:cover;min-height:220px;">
+      <div class="gallery-overlay"><span class="gallery-caption">illust. 이름뭘로하지 CM</span></div>
+    </div>
+    <!-- 7: 융 - 가로 넓게 -->
+    <div class="gallery-item hover-glow gi-wide" onclick="openLightbox('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbGDp8f%2FdJMcacPTYDu%2FAAAAAAAAAAAAAAAAAAAAAAjEKv-tqZKlroRuo-y4KVSS_rSZzAQGxeViy3t6m1Li%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3Dw9kI1KO6vbyof1owMAtY5SDuk6Y%253D','illust. 융 CM')">
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbGDp8f%2FdJMcacPTYDu%2FAAAAAAAAAAAAAAAAAAAAAAjEKv-tqZKlroRuo-y4KVSS_rSZzAQGxeViy3t6m1Li%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3Dw9kI1KO6vbyof1owMAtY5SDuk6Y%253D" alt="융 CM" style="width:100%;height:100%;object-fit:cover;min-height:220px;">
+      <div class="gallery-overlay"><span class="gallery-caption">illust. 융 CM</span></div>
+    </div>
+    <!-- 기존 텐시 그림들 -->
+    <div class="gallery-item hover-glow" onclick="openLightbox('KakaoTalk_20260314_072836377.jpg','illust. 텐시')">
+      <img src="KakaoTalk_20260314_072836377.jpg" alt="텐시" style="width:100%;height:100%;object-fit:cover;min-height:220px;">
+      <div class="gallery-overlay"><span class="gallery-caption">illust. 텐시</span></div>
+    </div>
+    <div class="gallery-item hover-glow gi-tall" onclick="openLightbox('KakaoTalk_20260314_072836377_01.png','illust. 유논 CM')">
+      <img src="KakaoTalk_20260314_072836377_01.png" alt="유논 CM" style="width:100%;height:100%;object-fit:cover;min-height:220px;">
+      <div class="gallery-overlay"><span class="gallery-caption">illust. 유논 CM</span></div>
+    </div>
+    <div class="gallery-item hover-glow" onclick="openLightbox('KakaoTalk_20260314_072836377_02.png','illust. 지인 지원')">
+      <img src="KakaoTalk_20260314_072836377_02.png" alt="지인 지원" style="width:100%;height:100%;object-fit:cover;min-height:220px;">
+      <div class="gallery-overlay"><span class="gallery-caption">illust. 지인 지원</span></div>
+    </div>
+    <div class="gallery-item hover-glow" onclick="openLightbox('KakaoTalk_20260314_072836377_03.png','illust. 청정수 CM')">
+      <img src="KakaoTalk_20260314_072836377_03.png" alt="청정수 CM" style="width:100%;height:100%;object-fit:cover;min-height:220px;">
+      <div class="gallery-overlay"><span class="gallery-caption">illust. 청정수 CM</span></div>
+    </div>
+    <div class="gallery-item hover-glow" onclick="openLightbox('KakaoTalk_20260314_072836377_04.png','illust. 텐시')">
+      <img src="KakaoTalk_20260314_072836377_04.png" alt="텐시" style="width:100%;height:100%;object-fit:cover;min-height:220px;">
+      <div class="gallery-overlay"><span class="gallery-caption">illust. 텐시</span></div>
+    </div>
+    <div class="gallery-item hover-glow" onclick="openLightbox('KakaoTalk_20260314_072836377_05.png','illust. 텐시')">
+      <img src="KakaoTalk_20260314_072836377_05.png" alt="텐시" style="width:100%;height:100%;object-fit:cover;min-height:220px;">
+      <div class="gallery-overlay"><span class="gallery-caption">illust. 텐시</span></div>
     </div>
   </div>
 </section>
@@ -1030,7 +1665,7 @@
 <section id="playlist">
   <div class="section-header fade-in">
     <span class="section-label">Soundtrack</span>
-    <h2 class="section-title">플레이리스트 <em>&amp;</em> 노래</h2>
+    <h2 class="section-title">플레이리스트</h2>
   </div>
   <div class="playlist-wrapper fade-in">
     <div class="playlist-sidebar">
@@ -1092,6 +1727,117 @@
   </div>
 </section>
 
+<div class="section-sep"></div>
+
+<!-- Timeline -->
+<section id="timeline" style="max-width:1200px;margin:0 auto;padding:120px 40px;">
+  <div class="section-header fade-in">
+    <span class="section-label">Story Timeline</span>
+    <h2 class="section-title">두 사람의 <em>서사</em></h2>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase">1막</div>
+      <div class="timeline-title">무대의 막이 오릅니다</div>
+      <div class="timeline-desc">2000년대 초반, 12월 말 겨울. 이곳은 '뤼미에르 어워즈'. 한 해의 마지막을 장식하는 최대 규모의 연예 시상식입니다. 대형 건물 연회장에는 각종 연예인들과 가수, 감독 등 한 곳에 모이기 시작하고. 2일 후에 있을 시상식 전 서로 인사하기 바빴습니다. '빛의 축제'라고 불릴 만큼 화려한 조명과 완벽한 무대를 자랑하며, 각자의 분야에서의 '빛의 중심'에 선 사람들에게는 즐거울 연말 행사일 겁니다. 시상식은 녹화 방식으로 진행되며, 초대 받은 이들 외에는 누구도 출입할 수 없는 외부와 완전히 단절된 건물에서 열립니다. 연회장과 개인실, 분수정원까지 필요한 설비는 내부에 모두 존재하는게 다행일지도 모르겠네요.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase">2막</div>
+      <div class="timeline-title">서곡</div>
+      <div class="timeline-desc">쿵, 조명들이 하나씩 무대 아래로 떨어지며. 연회장에 어둠이 내려앉습니다. 몇몇 사람들이 이상 상태를 보이고, 연회장 내부는 혼잡하네요. 유정아는 뤼미에르 어워즈까지 며칠도 채 되지 않았을 때. 문자를 하나 받았습니다. 해당 장소로 향하자 주최자를 만납니다. '경화수월'에 대한 연구. 그것은 인간의 의식이 완벽해질 수 있다고 믿어 연구하기 시작했으며. 다수의 실험이 누적되자 연구소는 폐쇄되었습니다. 그러나 주최자는 연구일지를 살피던 중 가장 적합한 실험체가 '연예인'이라는 사실을 알아채고. '뤼미에르 어워즈'라는 이름으로 실험을 재개했습니다. 본인을 도와 최종 실험을 진행한다면 당신이 원하는 이상을 이루어드리겠습니다. 더욱 더 밝게 빛나는 조명을 당신에게 비춰주죠. 라는 말에 유정아는 제안을 수락합니다.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase">3막</div>
+      <div class="timeline-title">앙상블</div>
+      <div class="timeline-desc">두 사람의 첫 만남은 온화하고 따스했습니다. 잘 구워진 쿠키를 나누어 건네던 유정아는 이비아에게 물었습니다. '언니라고 불러도 될까요?' 이비아는 웃으며 고개를 끄덕였습니다. 계절과는 동떨어진 장소에서 아직 어느쪽도 서로에게 무엇이 될지 몰랐던 계절. 소담스러운 이야기를 나누던 시간이 애틋했습니다.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase">4막</div>
+      <div class="timeline-title">레치타티보</div>
+      <div class="timeline-desc">이비아는 경화수월, 실험으로 인해 감염된 유정아를 발견했습니다. 기침과 식은땀을 흘리면서도 유정아가 신이 준 형벌이라며 자조하는 것을 들은 이비아는 본인의 이야기를 들려주며, 유정아를 다독였습니다. 유정아는 감염이 옮는다는 사실을 알면서도 애정을 갈구하는 탓인지 이비아와 접촉했으며. 끝내 이비아 또한 감염되었습니다. 첫날, 기침과 식은 땀을 흘리는 유정아가 아프다고 하자 토닥이던 이비아는. 둘째날 오전, 손끝 감각이 저하되고 치솟는 열. 둘은 함께 밤을 지새웠습니다. 둘째날 오후. 유정아는 이비아를 인식하지 못하고 환각을 보기 시작했습니다. 마지막, '잊어주세요.' 유정아가 이비아에게 남긴 말이었습니다.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase">5막</div>
+      <div class="timeline-title">합창</div>
+      <div class="timeline-desc">조명들이 하나, 둘. 무대 아래로 떨어졌습니다. 연회장이 어둠에 잠기고. 군중들이 패닉에 잠겼을 즈음에도 유정아의 금안은 오직 이비아만을 향했습니다. 두 시선이 맞닿고. '극이 더 풍성해졌네요. 역시 정아네요. 후후....' 유정아는 그 가면 같은 웃음을 끝까지 바라보았습니다. 웃음이 얼마나 많은 것을 숨기고 있는지 그녀는 누구보다 잘 알고 있었습니다. 그저, 끝. 경화수월로부터 시작된 무대의 연기가 막을 맞이했습니다.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase">6막</div>
+      <div class="timeline-title">아리아</div>
+      <div class="timeline-desc">이비아는 자취를 감추었습니다. 함께 나누었던 말들, 사소한 약속들이 전부 존재하지 않았다는 것처럼 그녀의 흔적은 도리어 찾기 어려웠습니다. 유정아는 빈 연회장에 남아. 건반이 없는 피아노를 치듯 허공 위에 선율을 그렸습니다. 그녀가 사라진 것은 그녀의 자의일 것입니다. 유정아는 그렇게 생각했습니다.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase">에필로그</div>
+      <div class="timeline-title">무대의 막을 내립니다</div>
+      <div class="timeline-desc">뤼미에르 어워드는 성공했습니다. 이곳의 연예인들은 실험을 위해 소비되었으며. 겨우 살아남은 사람들 또한 실험쥐처럼 같은 공간과 절차를 맴돌며 살게 될 것입니다. 물론 그건 유정아와는 관련이 없는 말이었습니다.</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- Dedication -->
+<section style="max-width:800px;margin:0 auto;padding:120px 40px;text-align:center;">
+  <div class="fade-in">
+    <span style="font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:0.5em;color:var(--accent2);text-transform:uppercase;display:block;margin-bottom:48px;">— Dedication —</span>
+
+    <div style="border:1px solid var(--border);background:var(--surface);padding:64px 56px;position:relative;margin-bottom:48px;">
+      <div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:120px;height:1px;background:linear-gradient(to right,transparent,var(--accent),transparent);"></div>
+
+      <p style="font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:0.4em;color:var(--accent2);text-transform:uppercase;margin-bottom:32px;">앤오님께</p>
+
+      <p style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--text-dim);line-height:2.2;margin-bottom:32px;">
+        당신은 까마귀에게 황금빛 눈동자를 주었고,<br>
+        카나리아에게는 날개를 접을 이유를 주었습니다.<br>
+        두 사람이 서로를 삼키고서야 비로소 숨을 쉬었던 건,<br>
+        그 파멸의 구조를 당신이 먼저 알고 있었기 때문일 겁니다.
+      </p>
+
+      <p style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--text-dim);line-height:2.2;margin-bottom:32px;">
+        어떤 세계에서 만나더라도 서로를 알아볼 두 사람을,<br>
+        이 작고 어두운 무대 위에 세워주셔서 감사합니다.
+      </p>
+
+      <p style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--text);line-height:2.2;">
+        당신이 빚어낸 이 아리아는,<br>
+        끝난 뒤에도 오래도록 울립니다.
+      </p>
+
+      <div style="width:40px;height:1px;background:var(--border);margin:40px auto;"></div>
+
+      <p style="font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:0.4em;color:var(--accent2);text-transform:uppercase;margin-bottom:32px;">이 글을 읽고 계신 당신께</p>
+
+      <p style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--text-dim);line-height:2.2;margin-bottom:32px;">
+        막이 내린 뒤에도 이 자리에 남아주셔서 감사합니다.<br><br>
+        연회장의 조명은 이미 꺼졌고,<br>
+        눈은 여전히 내리고 있으며,<br>
+        유정아는 아직도 허공에 선율을 그리고 있을 겁니다.
+      </p>
+
+      <p style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--text-dim);line-height:2.2;margin-bottom:40px;">
+        그 선율이 들리는 사람이라면,<br>
+        이미 이 두 사람의 이야기에 닿은 사람일 것입니다.<br><br>
+        부디 오래, 기억해주시기를.
+      </p>
+
+      <p style="font-family:'DM Serif Display',serif;font-size:20px;font-style:italic;color:var(--accent);line-height:2;">
+        "Tu m'as vue.<br>
+        그것으로 충분했고,<br>
+        그것이 나의 파멸이었다."
+      </p>
+
+      <div style="position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:120px;height:1px;background:linear-gradient(to right,transparent,var(--accent),transparent);"></div>
+    </div>
+  </div>
+</section>
+
 <!-- Footer -->
 <footer>
   <div class="footer-title">유정아 × 이비아</div>
@@ -1099,6 +1845,170 @@
 </footer>
 
 <script>
+  // ── 로딩 화면 ──
+  const loadBar = document.getElementById('loadBar');
+  const loading = document.getElementById('loading');
+  let prog = 0;
+  const loadInterval = setInterval(() => {
+    prog += Math.random() * 15;
+    if (prog >= 100) {
+      prog = 100;
+      clearInterval(loadInterval);
+      setTimeout(() => loading.classList.add('hidden'), 400);
+    }
+    loadBar.style.width = prog + '%';
+  }, 80);
+
+  // ── 방문자 카운터 ──
+  const visitorEl = document.getElementById('visitorNum');
+  let count = parseInt(localStorage.getItem('fansite_visits') || '0') + 1;
+  localStorage.setItem('fansite_visits', count);
+  let display = 0;
+  const target = count;
+  const countUp = setInterval(() => {
+    display += Math.ceil((target - display) / 8);
+    if (display >= target) { display = target; clearInterval(countUp); }
+    visitorEl.textContent = display.toLocaleString();
+  }, 40);
+
+  // ── 불꽃 파티클 ──
+  const emberContainer = document.body;
+  for (let i = 0; i < 18; i++) {
+    const e = document.createElement('div');
+    e.className = 'ember';
+    e.style.cssText = `
+      --ex: ${Math.random()*100}%;
+      --ed: ${6+Math.random()*8}s;
+      --edelay: ${Math.random()*10}s;
+      --edx: ${(Math.random()-0.5)*60}px;
+      width: ${Math.random()<0.3?3:2}px;
+      height: ${Math.random()<0.3?3:2}px;
+    `;
+    emberContainer.appendChild(e);
+  }
+
+  // ── 스크롤 진행바 ──
+  const scrollBar = document.getElementById('scroll-bar');
+  window.addEventListener('scroll', () => {
+    const total = document.body.scrollHeight - window.innerHeight;
+    scrollBar.style.width = (window.scrollY / total * 100) + '%';
+  });
+
+  // ── BGM 버튼 (쇼팽 유튜브 링크로 연결) ──
+  const bgmBtn = document.getElementById('bgm-btn');
+  bgmBtn.addEventListener('click', () => {
+    window.open('https://youtu.be/EsJU7qMyGzw?si=oIsB_y9JITamTZib', '_blank');
+    bgmBtn.classList.toggle('playing');
+  });
+
+  // ── 마우스 파티클 (음표 + 꽃잎) ──
+  const particles = ['♪','♩','♫','🌸','·','✦','❋'];
+  let lastParticle = 0;
+  document.addEventListener('mousemove', e => {
+    const now = Date.now();
+    if (now - lastParticle < 120) return;
+    lastParticle = now;
+    const p = document.createElement('div');
+    p.className = 'mouse-particle';
+    p.textContent = particles[Math.floor(Math.random()*particles.length)];
+    p.style.cssText = `
+      left: ${e.clientX}px; top: ${e.clientY}px;
+      --px: ${(Math.random()-0.5)*40}px;
+      --py: ${-20-Math.random()*40}px;
+      color: ${Math.random()<0.5 ? 'var(--accent)' : 'var(--text-faint)'};
+      opacity: 0.7;
+    `;
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 1200);
+  });
+
+  // ── 다크/라이트 토글 ──
+  const themeBtn = document.getElementById('theme-btn');
+  themeBtn.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+    themeBtn.textContent = document.body.classList.contains('light-mode') ? '🌙' : '☀️';
+  });
+
+  // ── 비밀 페이지 (D 키) ──
+  document.addEventListener('keydown', e => {
+    if (e.key === 'd' || e.key === 'D') {
+      document.getElementById('secret-page').classList.toggle('open');
+    }
+    if (e.key === 'Escape') {
+      document.getElementById('secret-page').classList.remove('open');
+    }
+  });
+
+  // ── 라이트박스 ──
+  function openLightbox(src, caption) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox-caption').textContent = caption;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // ── 캐릭터 섹션별 코멘트 ──
+  const sectionComments = {
+    'gallery': { jeonga: '...보지 마세요.', ibia: '아름다운 그림들이네요. 후후.' },
+    'playlist': { jeonga: '...언니가 잘해요.', ibia: '카르멘은 제 18번이에요.' },
+    'novels': { jeonga: '...읽으실 건가요.', ibia: '천천히 읽어주세요.' },
+    'about': { jeonga: '...저 보고 있어요?', ibia: '정아는 부끄러워하고 있어요.' },
+    'home': { jeonga: '...어서 오세요.', ibia: '잘 오셨어요. 천천히 둘러보세요.' },
+  };
+  let currentSection = '';
+  const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        if (sectionComments[id] && id !== currentSection) {
+          currentSection = id;
+          const c = sectionComments[id];
+          document.getElementById('jeonga-say').textContent = c.jeonga;
+          document.getElementById('ibia-say').textContent = c.ibia;
+          const popup = document.getElementById('char-popup');
+          popup.classList.add('open');
+          clearTimeout(window._popupTimer);
+          window._popupTimer = setTimeout(() => popup.classList.remove('open'), 4000);
+        }
+      }
+    });
+  }, { threshold: 0.4 });
+  ['home','about','gallery','playlist','novels'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) sectionObserver.observe(el);
+  });
+
+  // 입장 팝업
+  setTimeout(() => {
+    document.getElementById('char-popup').classList.add('open');
+    window._popupTimer = setTimeout(() => document.getElementById('char-popup').classList.remove('open'), 5000);
+  }, 2000);
+
+  // ── 눈 내리는 효과 ──
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('div');
+    s.className = 'snowflake';
+    const size = 2 + Math.random() * 5;
+    s.style.cssText = `
+      --sl: ${Math.random()*100}%;
+      --sd: ${7 + Math.random()*10}s;
+      --sdelay: ${Math.random()*14}s;
+      --so: ${0.2 + Math.random()*0.5};
+      --sf: ${size}px;
+      --sx: ${(Math.random()-0.5)*80}px;
+      --sx2: ${(Math.random()-0.5)*60}px;
+      --sb: ${size < 3 ? '1px' : '0px'};
+    `;
+    document.body.appendChild(s);
+  }
+
   // Stars
   const starsEl = document.getElementById('stars');
   for (let i = 0; i < 120; i++) {
@@ -1116,7 +2026,7 @@
     starsEl.appendChild(s);
   }
 
-  // Custom cursor
+  // ── 커서 ──
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   let mx = 0, my = 0, rx = 0, ry = 0;
@@ -1134,11 +2044,11 @@
   document.querySelectorAll('a, button').forEach(el => {
     el.addEventListener('mouseenter', () => {
       ring.style.width = '48px'; ring.style.height = '48px';
-      ring.style.borderColor = 'rgba(184,160,216,0.7)';
+      ring.style.borderColor = 'rgba(220,60,60,0.7)';
     });
     el.addEventListener('mouseleave', () => {
       ring.style.width = '32px'; ring.style.height = '32px';
-      ring.style.borderColor = 'rgba(184,160,216,0.4)';
+      ring.style.borderColor = 'rgba(220,60,60,0.5)';
     });
   });
 
@@ -1166,6 +2076,25 @@
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Timeline observer
+  const tlObserver = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 150);
+        tlObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.timeline-item').forEach(el => tlObserver.observe(el));
+
+  // Nav timeline link
+  const navLinks = document.querySelector('.nav-links');
+  if (!document.querySelector('a[href="#timeline"]')) {
+    const li = document.createElement('li');
+    li.innerHTML = '<a href="#timeline">서사</a>';
+    navLinks.appendChild(li);
+  }
 </script>
 </body>
 </html>
