@@ -1294,7 +1294,7 @@
   </div>
   <div class="fade-in" style="display:flex;flex-direction:column;gap:24px;">
     <div style="border:1px solid var(--border);border-radius:2px;overflow:hidden;">
-      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fc6F5DS%2FdJMcaaduzWD%2FAAAAAAAAAAAAAAAAAAAAACW_L-DRLnB0PsKFurya9L1IcMWPht7XfEtJXJqpYlhO%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DsUepCUb0Ul7fXT3qY117qfDun4c%253D"
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fm46Fn%2FdJMcaaD8Chz%2FAAAAAAAAAAAAAAAAAAAAAH9Cp4qk4NuYHuD5LdyrXlZnTKq6zs8NXxSkovgPbo01%2Fimg.jpg%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DWzXC%252Fekzlbf1J6K6aq6y4F%252FPtSE%253D"
            alt="페어 정보 1" style="width:100%;display:block;"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div style="display:none;padding:60px;align-items:center;justify-content:center;background:var(--surface);color:var(--text-faint);font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:0.2em;">이미지를 불러오는 중...</div>
@@ -1583,21 +1583,19 @@
   <style>
     .gallery-grid-new {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: auto;
+      grid-template-columns: repeat(4, 1fr);
       gap: 3px;
     }
-    .gallery-grid-new .gi-tall { grid-row: span 2; }
-    .gallery-grid-new .gi-wide { grid-column: span 2; }
+    .gallery-grid-new .gallery-item {
+      aspect-ratio: 1 / 1;
+    }
     @media (max-width: 768px) {
-      .gallery-grid-new { grid-template-columns: 1fr 1fr; }
-      .gallery-grid-new .gi-tall { grid-row: span 1; }
-      .gallery-grid-new .gi-wide { grid-column: span 2; }
+      .gallery-grid-new { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
   <div class="gallery-grid-new fade-in">
     <!-- 1: 암케나 - 크게 세로 -->
-    <div class="gallery-item hover-glow gi-tall" onclick="openLightbox('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fc6F5DS%2FdJMcaaduzWD%2FAAAAAAAAAAAAAAAAAAAAACW_L-DRLnB0PsKFurya9L1IcMWPht7XfEtJXJqpYlhO%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DsUepCUb0Ul7fXT3qY117qfDun4c%253D','illust. 암케나 CM')">
+    <div class="gallery-item hover-glow" onclick="openLightbox('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fc6F5DS%2FdJMcaaduzWD%2FAAAAAAAAAAAAAAAAAAAAACW_L-DRLnB0PsKFurya9L1IcMWPht7XfEtJXJqpYlhO%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DsUepCUb0Ul7fXT3qY117qfDun4c%253D','illust. 암케나 CM')">
       <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fc6F5DS%2FdJMcaaduzWD%2FAAAAAAAAAAAAAAAAAAAAACW_L-DRLnB0PsKFurya9L1IcMWPht7XfEtJXJqpYlhO%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DsUepCUb0Ul7fXT3qY117qfDun4c%253D" alt="암케나 CM" style="width:100%;height:100%;object-fit:cover;min-height:300px;">
       <div class="gallery-overlay"><span class="gallery-caption">illust. 암케나 CM</span></div>
     </div>
@@ -1612,7 +1610,7 @@
       <div class="gallery-overlay"><span class="gallery-caption">illust. 쁘띠 CM</span></div>
     </div>
     <!-- 4: 신료 - 가로로 넓게 -->
-    <div class="gallery-item hover-glow gi-wide" onclick="openLightbox('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbfzZQA%2FdJMcaivMhfY%2FAAAAAAAAAAAAAAAAAAAAAA3DBp0PTWTY-txJbFXqE_NeQZN1wzkFrEwEBiEvKRDG%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DeXlwddnicX3nMm3kE%252FcGi3IKdsI%253D','illust. 신료 CM')">
+    <div class="gallery-item hover-glow" onclick="openLightbox('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbfzZQA%2FdJMcaivMhfY%2FAAAAAAAAAAAAAAAAAAAAAA3DBp0PTWTY-txJbFXqE_NeQZN1wzkFrEwEBiEvKRDG%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DeXlwddnicX3nMm3kE%252FcGi3IKdsI%253D','illust. 신료 CM')">
       <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbfzZQA%2FdJMcaivMhfY%2FAAAAAAAAAAAAAAAAAAAAAA3DBp0PTWTY-txJbFXqE_NeQZN1wzkFrEwEBiEvKRDG%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DeXlwddnicX3nMm3kE%252FcGi3IKdsI%253D" alt="신료 CM" style="width:100%;height:100%;object-fit:cover;min-height:220px;">
       <div class="gallery-overlay"><span class="gallery-caption">illust. 신료 CM</span></div>
     </div>
@@ -1627,7 +1625,7 @@
       <div class="gallery-overlay"><span class="gallery-caption">illust. 이름뭘로하지 CM</span></div>
     </div>
     <!-- 7: 융 - 가로 넓게 -->
-    <div class="gallery-item hover-glow gi-wide" onclick="openLightbox('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbGDp8f%2FdJMcacPTYDu%2FAAAAAAAAAAAAAAAAAAAAAAjEKv-tqZKlroRuo-y4KVSS_rSZzAQGxeViy3t6m1Li%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3Dw9kI1KO6vbyof1owMAtY5SDuk6Y%253D','illust. 융 CM')">
+    <div class="gallery-item hover-glow" onclick="openLightbox('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbGDp8f%2FdJMcacPTYDu%2FAAAAAAAAAAAAAAAAAAAAAAjEKv-tqZKlroRuo-y4KVSS_rSZzAQGxeViy3t6m1Li%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3Dw9kI1KO6vbyof1owMAtY5SDuk6Y%253D','illust. 융 CM')">
       <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbGDp8f%2FdJMcacPTYDu%2FAAAAAAAAAAAAAAAAAAAAAAjEKv-tqZKlroRuo-y4KVSS_rSZzAQGxeViy3t6m1Li%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3Dw9kI1KO6vbyof1owMAtY5SDuk6Y%253D" alt="융 CM" style="width:100%;height:100%;object-fit:cover;min-height:220px;">
       <div class="gallery-overlay"><span class="gallery-caption">illust. 융 CM</span></div>
     </div>
@@ -1636,7 +1634,7 @@
       <img src="KakaoTalk_20260314_072836377.jpg" alt="텐시" style="width:100%;height:100%;object-fit:cover;min-height:220px;">
       <div class="gallery-overlay"><span class="gallery-caption">illust. 텐시</span></div>
     </div>
-    <div class="gallery-item hover-glow gi-tall" onclick="openLightbox('KakaoTalk_20260314_072836377_01.png','illust. 유논 CM')">
+    <div class="gallery-item hover-glow" onclick="openLightbox('KakaoTalk_20260314_072836377_01.png','illust. 유논 CM')">
       <img src="KakaoTalk_20260314_072836377_01.png" alt="유논 CM" style="width:100%;height:100%;object-fit:cover;min-height:220px;">
       <div class="gallery-overlay"><span class="gallery-caption">illust. 유논 CM</span></div>
     </div>
@@ -1740,43 +1738,43 @@
       <div class="timeline-dot"></div>
       <div class="timeline-phase">1막</div>
       <div class="timeline-title">무대의 막이 오릅니다</div>
-      <div class="timeline-desc">2000년대 초반, 12월 말 겨울. 이곳은 '뤼미에르 어워즈'. 한 해의 마지막을 장식하는 최대 규모의 연예 시상식입니다. 대형 건물 연회장에는 각종 연예인들과 가수, 감독 등 한 곳에 모이기 시작하고. 2일 후에 있을 시상식 전 서로 인사하기 바빴습니다. '빛의 축제'라고 불릴 만큼 화려한 조명과 완벽한 무대를 자랑하며, 각자의 분야에서의 '빛의 중심'에 선 사람들에게는 즐거울 연말 행사일 겁니다. 시상식은 녹화 방식으로 진행되며, 초대 받은 이들 외에는 누구도 출입할 수 없는 외부와 완전히 단절된 건물에서 열립니다. 연회장과 개인실, 분수정원까지 필요한 설비는 내부에 모두 존재하는게 다행일지도 모르겠네요.</div>
+      <div class="timeline-desc">2000년대 초반, 12월 말 겨울. <b style="color:#f5eae8;">이곳은 '뤼미에르 어워즈'.</b> 한 해의 마지막을 장식하는 최대 규모의 연예 시상식입니다. 대형 건물 연회장에는 각종 연예인들과 가수, 감독 등 한 곳에 모이기 시작하고. 2일 후에 있을 시상식 전 서로 인사하기 바빴습니다. '빛의 축제'라고 불릴 만큼 화려한 조명과 완벽한 무대를 자랑하며, <b style="color:#f5eae8;">각자의 분야에서의 '빛의 중심'에 선 사람들에게는 즐거울 연말 행사일 겁니다.</b> 시상식은 녹화 방식으로 진행되며, <b style="color:#f5eae8;">초대 받은 이들 외에는 누구도 출입할 수 없는 외부와 완전히 단절된 건물에서 열립니다.</b> 연회장과 개인실, 분수정원까지 필요한 설비는 내부에 모두 존재하는게 다행일지도 모르겠네요.</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot"></div>
       <div class="timeline-phase">2막</div>
       <div class="timeline-title">서곡</div>
-      <div class="timeline-desc">쿵, 조명들이 하나씩 무대 아래로 떨어지며. 연회장에 어둠이 내려앉습니다. 몇몇 사람들이 이상 상태를 보이고, 연회장 내부는 혼잡하네요. 유정아는 뤼미에르 어워즈까지 며칠도 채 되지 않았을 때. 문자를 하나 받았습니다. 해당 장소로 향하자 주최자를 만납니다. '경화수월'에 대한 연구. 그것은 인간의 의식이 완벽해질 수 있다고 믿어 연구하기 시작했으며. 다수의 실험이 누적되자 연구소는 폐쇄되었습니다. 그러나 주최자는 연구일지를 살피던 중 가장 적합한 실험체가 '연예인'이라는 사실을 알아채고. '뤼미에르 어워즈'라는 이름으로 실험을 재개했습니다. 본인을 도와 최종 실험을 진행한다면 당신이 원하는 이상을 이루어드리겠습니다. 더욱 더 밝게 빛나는 조명을 당신에게 비춰주죠. 라는 말에 유정아는 제안을 수락합니다.</div>
+      <div class="timeline-desc">쿵, 조명들이 하나씩 무대 아래로 떨어지며. 연회장에 어둠이 내려앉습니다. 몇몇 사람들이 이상 상태를 보이고, 연회장 내부는 혼잡하네요. 유정아는 뤼미에르 어워즈까지 며칠도 채 되지 않았을 때. <b style="color:#f5eae8;">문자를 하나 받았습니다.</b> 해당 장소로 향하자 주최자를 만납니다. '경화수월'에 대한 연구. 그것은 인간의 의식이 완벽해질 수 있다고 믿어 연구하기 시작했으며. 다수의 실험이 누적되자 연구소는 폐쇄되었습니다. 그러나 주최자는 연구일지를 살피던 중 <b style="color:#f5eae8;">가장 적합한 실험체가 '연예인'이라는 사실을 알아채고.</b> '뤼미에르 어워즈'라는 이름으로 실험을 재개했습니다. <b style="color:#f5eae8;">본인을 도와 최종 실험을 진행한다면 당신이 원하는 이상을 이루어드리겠습니다. 더욱 더 밝게 빛나는 조명을 당신에게 비춰주죠.</b> 라는 말에 유정아는 제안을 수락합니다.</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot"></div>
       <div class="timeline-phase">3막</div>
       <div class="timeline-title">앙상블</div>
-      <div class="timeline-desc">두 사람의 첫 만남은 온화하고 따스했습니다. 잘 구워진 쿠키를 나누어 건네던 유정아는 이비아에게 물었습니다. '언니라고 불러도 될까요?' 이비아는 웃으며 고개를 끄덕였습니다. 계절과는 동떨어진 장소에서 아직 어느쪽도 서로에게 무엇이 될지 몰랐던 계절. 소담스러운 이야기를 나누던 시간이 애틋했습니다.</div>
+      <div class="timeline-desc">두 사람의 첫 만남은 온화하고 따스했습니다. 잘 구워진 쿠키를 나누어 건네던 유정아는 이비아에게 물었습니다. <b style="color:#f5eae8;">'언니라고 불러도 될까요?'</b> 이비아는 웃으며 고개를 끄덕였습니다. 계절과는 동떨어진 장소에서 <b style="color:#f5eae8;">아직 어느쪽도 서로에게 무엇이 될지 몰랐던 계절.</b> 소담스러운 이야기를 나누던 시간이 애틋했습니다.</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot"></div>
       <div class="timeline-phase">4막</div>
       <div class="timeline-title">레치타티보</div>
-      <div class="timeline-desc">이비아는 경화수월, 실험으로 인해 감염된 유정아를 발견했습니다. 기침과 식은땀을 흘리면서도 유정아가 신이 준 형벌이라며 자조하는 것을 들은 이비아는 본인의 이야기를 들려주며, 유정아를 다독였습니다. 유정아는 감염이 옮는다는 사실을 알면서도 애정을 갈구하는 탓인지 이비아와 접촉했으며. 끝내 이비아 또한 감염되었습니다. 첫날, 기침과 식은 땀을 흘리는 유정아가 아프다고 하자 토닥이던 이비아는. 둘째날 오전, 손끝 감각이 저하되고 치솟는 열. 둘은 함께 밤을 지새웠습니다. 둘째날 오후. 유정아는 이비아를 인식하지 못하고 환각을 보기 시작했습니다. 마지막, '잊어주세요.' 유정아가 이비아에게 남긴 말이었습니다.</div>
+      <div class="timeline-desc">이비아는 경화수월, 실험으로 인해 감염된 유정아를 발견했습니다. 기침과 식은땀을 흘리면서도 유정아가 신이 준 형벌이라며 자조하는 것을 들은 이비아는 본인의 이야기를 들려주며, 유정아를 다독였습니다. <b style="color:#f5eae8;">유정아는 감염이 옮는다는 사실을 알면서도 애정을 갈구하는 탓인지 이비아와 접촉했으며. 끝내 이비아 또한 감염되었습니다.</b> 첫날, 기침과 식은 땀을 흘리는 유정아가 아프다고 하자 토닥이던 이비아는. 둘째날 오전, 손끝 감각이 저하되고 치솟는 열. 둘은 함께 밤을 지새웠습니다. 둘째날 오후. 유정아는 이비아를 인식하지 못하고 환각을 보기 시작했습니다. <b style="color:#f5eae8;">마지막, '잊어주세요.' 유정아가 이비아에게 남긴 말이었습니다.</b></div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot"></div>
       <div class="timeline-phase">5막</div>
       <div class="timeline-title">합창</div>
-      <div class="timeline-desc">조명들이 하나, 둘. 무대 아래로 떨어졌습니다. 연회장이 어둠에 잠기고. 군중들이 패닉에 잠겼을 즈음에도 유정아의 금안은 오직 이비아만을 향했습니다. 두 시선이 맞닿고. '극이 더 풍성해졌네요. 역시 정아네요. 후후....' 유정아는 그 가면 같은 웃음을 끝까지 바라보았습니다. 웃음이 얼마나 많은 것을 숨기고 있는지 그녀는 누구보다 잘 알고 있었습니다. 그저, 끝. 경화수월로부터 시작된 무대의 연기가 막을 맞이했습니다.</div>
+      <div class="timeline-desc">조명들이 하나, 둘. 무대 아래로 떨어졌습니다. 연회장이 어둠에 잠기고. 군중들이 패닉에 잠겼을 즈음에도 <b style="color:#f5eae8;">유정아의 금안은 오직 이비아만을 향했습니다.</b> 두 시선이 맞닿고. <b style="color:#f5eae8;">'극이 더 풍성해졌네요. 역시 정아네요. 후후....'</b> 유정아는 그 가면 같은 웃음을 끝까지 바라보았습니다. <b style="color:#f5eae8;">웃음이 얼마나 많은 것을 숨기고 있는지 그녀는 누구보다 잘 알고 있었습니다.</b> 그저, 끝. 경화수월로부터 시작된 무대의 연기가 막을 맞이했습니다.</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot"></div>
       <div class="timeline-phase">6막</div>
       <div class="timeline-title">아리아</div>
-      <div class="timeline-desc">이비아는 자취를 감추었습니다. 함께 나누었던 말들, 사소한 약속들이 전부 존재하지 않았다는 것처럼 그녀의 흔적은 도리어 찾기 어려웠습니다. 유정아는 빈 연회장에 남아. 건반이 없는 피아노를 치듯 허공 위에 선율을 그렸습니다. 그녀가 사라진 것은 그녀의 자의일 것입니다. 유정아는 그렇게 생각했습니다.</div>
+      <div class="timeline-desc"><b style="color:#f5eae8;">이비아는 자취를 감추었습니다.</b> 함께 나누었던 말들, 사소한 약속들이 전부 존재하지 않았다는 것처럼 그녀의 흔적은 도리어 찾기 어려웠습니다. 유정아는 빈 연회장에 남아. <b style="color:#f5eae8;">건반이 없는 피아노를 치듯 허공 위에 선율을 그렸습니다.</b> 그녀가 사라진 것은 그녀의 자의일 것입니다. 유정아는 그렇게 생각했습니다.</div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot"></div>
       <div class="timeline-phase">에필로그</div>
       <div class="timeline-title">무대의 막을 내립니다</div>
-      <div class="timeline-desc">뤼미에르 어워드는 성공했습니다. 이곳의 연예인들은 실험을 위해 소비되었으며. 겨우 살아남은 사람들 또한 실험쥐처럼 같은 공간과 절차를 맴돌며 살게 될 것입니다. 물론 그건 유정아와는 관련이 없는 말이었습니다.</div>
+      <div class="timeline-desc"><b style="color:#f5eae8;">뤼미에르 어워드는 성공했습니다.</b> 이곳의 연예인들은 실험을 위해 소비되었으며. 겨우 살아남은 사람들 또한 실험쥐처럼 같은 공간과 절차를 맴돌며 살게 될 것입니다. <b style="color:#f5eae8;">물론 그건 유정아와는 관련이 없는 말이었습니다.</b></div>
     </div>
   </div>
 </section>
